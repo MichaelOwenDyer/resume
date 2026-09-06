@@ -1,7 +1,6 @@
-#import "../env.typ": env
 #import "../links.typ": links
 
-#let data = (
+#let content(env) = (
   labels: (
     contact: "CONTACT",
     skills: "SKILLS",
