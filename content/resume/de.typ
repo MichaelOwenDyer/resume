@@ -1,4 +1,5 @@
 #import "../env.typ": env
+#import "../links.typ": links
 
 #let data = (
   labels: (
@@ -20,11 +21,10 @@
 
   contact: (
     email: env.email,
-    email-href: env.email-href,
     phone: env.phone,
     address: (env.street, env.zip + " München"),
-    linkedin: (label: env.linkedin-label, url: env.linkedin-url),
-    github: (label: env.github-label, url: env.github-url),
+    linkedin: (label: links.linkedin-label, url: links.linkedin-url),
+    github: (label: links.github-label, url: links.github-url),
   ),
 
   skills: (
@@ -80,10 +80,10 @@
       role: "Full-Stack Software Engineer",
       location: "Garching bei München",
       dates: [Februar 2023 -- April 2024],
-      summary: [Mitglied des agilen Entwicklungsteams der Online-Lernplattform #link(env.artemis-url)[Artemis].],
+      summary: [Mitglied des agilen Entwicklungsteams der Online-Lernplattform #link(links.artemis-url)[Artemis].],
       bullets: (
         [Verbesserung des Benutzererlebnisses durch Integration von LLMs und Vektordatenbanken.],
-        [Unser KI-Subsystem wird von Tausenden Studierenden und Lehrenden an der TUM und >10 weiteren Universitäten genutzt und in der #link(env.sz-url)[Süddeutschen Zeitung] vorgestellt.],
+        [Unser KI-Subsystem wird von Tausenden Studierenden und Lehrenden an der TUM und >10 weiteren Universitäten genutzt und in der #link(links.sz-url)[Süddeutschen Zeitung] vorgestellt.],
       ),
       keywords: ("Java", "Spring Boot 3", "AngularJS", "Python", "Prompt Engineering"),
     ),
@@ -91,13 +91,13 @@
 
   projects: (
     (
-      title: [#link(env.petrivet-url)[petrivet] -- Rust Petri-Netz-Model-Checker],
+      title: [#link(links.petrivet-url)[petrivet] -- Rust Petri-Netz-Model-Checker],
       dates: [März 2024 -- Heute],
       summary: [Open-Source-Bibliothek zur Modellierung und Analyse von Petri-Netzen, geschrieben in Rust.],
       bullets: (
         [Architektur einer CEGAR-basierten SMT-Solver-Refinement-Engine zur Entscheidung von Erreichbarkeits- und Überdeckungseigenschaften.],
         [Implementierung spezialisierter Algorithmen für diverse strukturelle Unterklassen von Petri-Netzen.],
-        [Benchmarking im Rahmen des #link(env.mcc-2026-url)[Model Checking Contest 2026 (MCC Hamburg)].],
+        [Benchmarking im Rahmen des #link(links.mcc-2026-url)[Model Checking Contest 2026 (MCC Hamburg)].],
       ),
       keywords: ("Rust", "Model Checking", "Formale Verifikation", "Z3", "ILP", "WebAssembly", "Forschung & Lehre"),
     ),
@@ -105,14 +105,14 @@
 
   projects-continued: (
     (
-      title: [#link(env.dotfiles-url)[Nix Dotfiles]],
+      title: [#link(links.dotfiles-url)[Nix Dotfiles]],
       dates: [Dezember 2024 -- Heute],
       summary: [Mein persönliches Repository für deklarative Nix-Konfigurationen für Workstation, Laptops und Heimnetzwerk. Vollständig reproduzierbar und remote deploybar.],
       bullets: (),
       keywords: ("Nix", "Linux", "MacOS", "Netzwerke", "Deklarative Konfiguration"),
     ),
     (
-      title: [#link(env.blackjack-url)[Blackjack Simulator]],
+      title: [#link(links.blackjack-url)[Blackjack Simulator]],
       dates: [August 2023 -- Oktober 2024],
       summary: [Hochperformante statistische Simulations-Engine basierend auf einem Zustandsautomaten.],
       bullets: (),
@@ -123,7 +123,7 @@
   education-continued: (
     (
       institution: "Goethe Institut",
-      program: (label: "Studienbrücke", url: env.goethe-url),
+      program: (label: "Studienbrücke", url: links.goethe-url),
       dates: [Oktober 2017 -- Juni 2019],
       bullets: (
         [Intensive Sprachausbildung und Aufnahmeprüfungen für deutsche Universitäten],
@@ -214,7 +214,7 @@
           #emph[National Orchestra Championships] \
           März 2018 \
           Lincoln Center, New York City, USA \
-          #link(env.lincoln-center-mozart-url)[Solist, Mozart Klavierkonzert d-Moll KV 466]
+          #link(links.lincoln-center-mozart-url)[Solist, Mozart Klavierkonzert d-Moll KV 466]
         ],
       )
     ),

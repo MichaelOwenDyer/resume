@@ -53,7 +53,7 @@
         gutter: 10pt,
         column-gutter: 1pt,
         ..(
-          ("envelope", link(data.contact.email-href)[#data.contact.email]),
+          ("envelope", link("mailto:" + data.contact.email)[#data.contact.email]),
           ("phone", data.contact.phone.join(" ")),
           ("location-dot", [#data.contact.address.at(0) \ #data.contact.address.at(1)]),
           ("github", link(data.contact.github.url)[#data.contact.github.label]),

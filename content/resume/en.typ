@@ -1,4 +1,5 @@
 #import "../env.typ": env
+#import "../links.typ": links
 
 #let data = (
   labels: (
@@ -20,11 +21,10 @@
 
   contact: (
     email: env.email,
-    email-href: env.email-href,
     phone: env.phone,
     address: (env.street, env.zip + " Munich, Germany"),
-    linkedin: (label: env.linkedin-label, url: env.linkedin-url),
-    github: (label: env.github-label, url: env.github-url),
+    linkedin: (label: links.linkedin-label, url: links.linkedin-url),
+    github: (label: links.github-label, url: links.github-url),
   ),
 
   skills: (
@@ -80,10 +80,10 @@
       role: "Full-Stack Software Engineer",
       location: "Garching, Germany",
       dates: [February 2023 -- April 2024],
-      summary: [Agile team member of the online learning platform #link(env.artemis-url)[Artemis].],
+      summary: [Agile team member of the online learning platform #link(links.artemis-url)[Artemis].],
       bullets: (
         [Enhanced user experience through LLM and vector database integration.],
-        [Our AI subsystem is used by thousands of students and educators at TUM and >10 other universities, and was featured in the #link(env.sz-url)[Süddeutsche Zeitung.]],
+        [Our AI subsystem is used by thousands of students and educators at TUM and >10 other universities, and was featured in the #link(links.sz-url)[Süddeutsche Zeitung.]],
       ),
       keywords: ("Java", "Spring Boot 3", "AngularJS", "Python", "Prompt Engineering"),
     ),
@@ -91,14 +91,14 @@
 
   projects: (
     (
-      title: [#link(env.petrivet-url)[petrivet] -- Rust Petri Net Model Checker],
+      title: [#link(links.petrivet-url)[petrivet] -- Rust Petri Net Model Checker],
       dates: [March 2024 -- Present],
       summary: [Open-source Petri net modeling and analysis library written in Rust.],
       bullets: (
         [Implemented specialized boundedness, deadlock-freedom, and liveness algorithms for significant structural subclasses of Petri nets.],
         [Architected a CEGAR-style SMT solver refinement engine to decide reachability and coverability properties.],
         [Focus on education and foundations in current academic research.],
-        [Benchmarked at the #link(env.mcc-2026-url)[2026 Model Checking Contest (MCC Hamburg)]],
+        [Benchmarked at the #link(links.mcc-2026-url)[2026 Model Checking Contest (MCC Hamburg)]],
       ),
       keywords: ("Rust", "Model Checking", "Formal Verification", "Z3", "ILP", "WebAssembly", "Research & Education"),
     ),
@@ -106,14 +106,14 @@
 
   projects-continued: (
     (
-      title: [#link(env.dotfiles-url)[Nix Dotfiles]],
+      title: [#link(links.dotfiles-url)[Nix Dotfiles]],
       dates: [December 2024 -- Present],
       summary: [My personal declarative Nix configuration repository for my workstation, laptops, and home network. Fully reproducible and remote-deployable.],
       bullets: (),
       keywords: ("Nix", "Linux", "MacOS", "Networking", "Declarative Configuration"),
     ),
     (
-      title: [#link(env.blackjack-url)[Blackjack Simulator]],
+      title: [#link(links.blackjack-url)[Blackjack Simulator]],
       dates: [August 2023 -- October 2024],
       summary: [High-throughput statistical simulation engine in the form of a state machine.],
       bullets: (),
@@ -124,7 +124,7 @@
   education-continued: (
     (
       institution: "Goethe Institute",
-      program: (label: "Study Bridge", url: env.goethe-url),
+      program: (label: "Study Bridge", url: links.goethe-url),
       dates: [October 2017 -- June 2019],
       bullets: (
         [Intensive German language course and entrance exams for German university],
@@ -215,7 +215,7 @@
           #emph[National Orchestra Championships] \
           March 2018 \
           Lincoln Center, New York City, USA \
-          #link(env.lincoln-center-mozart-url)[Soloist, Mozart Piano Concerto K466]
+          #link(links.lincoln-center-mozart-url)[Soloist, Mozart Piano Concerto K466]
         ],
       )
     ),
