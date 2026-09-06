@@ -1,0 +1,107 @@
+name: Build and Upload Resumes
+
+env:
+  RESUME_EN_FILENAME: 'Dyer_Michael_Resume.pdf'
+  RESUME_DE_FILENAME: 'Dyer_Michael_Lebenslauf.pdf'
+
+on: [push]
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v5
+
+      - name: Decode env secret
+        run: |
+          echo "${{ secrets.ENV }}" | base64 --decode > env.typ
+
+      - name: Build Resume PDFs
+        run: |
+          mkdir -p target
+          typst compile \
+            --font-path fonts/EBGaramond \
+            --font-path fonts/Roboto \
+            --font-path fonts/FontAwesome \
+            --input content=content/resume/en.typ \
+            --input env=env.typ \
+            build-resume.typ \
+            target/${{ env.RESUME_EN_FILENAME }} &
+          typst compile \
+            --font-path fonts/EBGaramond \
+            --font-path fonts/Roboto \
+            --font-path fonts/FontAwesome \
+            --input content=content/resume/de.typ \
+            --input env=env.typ \
+            build-resume.typ \
+            target/${{ env.RESUME_DE_FILENAME }} &
+          wait
+
+      - name: Upload to Google Drive
+        env:
+          CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+          FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+        run: |
+          ACCESS_TOKEN=$(curl -s -X POST "https://oauth2.googleapis.com/token" \
+            -d "client_id=$CLIENT_ID" \
+            -d "client_secret=$CLIENT_SECRET" \
+            -d "refresh_token=$REFRESH_TOKEN" \
+            -d "grant_type=refresh_token" | jq -r .access_token)
+          
+          if [ -z "$ACCESS_TOKEN" ] || [ "$ACCESS_TOKEN" == "null" ]; then
+            echo "Failed to retrieve Access Token"
+            exit 1
+          fi
+
+          RESUMES=(
+            "${{ env.RESUME_EN_FILENAME }}"
+            "${{ env.RESUME_DE_FILENAME }}"
+          )
+          
+          # 2. Iterate over each resume
+          for FILE_NAME in "${RESUMES[@]}"; do
+            echo "Uploading $FILE_NAME..."
+            FILE_PATH="target/$FILE_NAME"
+
+            if [ ! -f "$FILE_PATH" ]; then
+              echo "Error: $FILE_PATH does not exist locally!"
+              exit 1
+            fi
+
+            SEARCH_RES=$(curl -s -G "https://www.googleapis.com/drive/v3/files" \
+              -H "Authorization: Bearer $ACCESS_TOKEN" \
+              --data-urlencode "q=name='$FILE_NAME' and '$FOLDER_ID' in parents and trashed=false" \
+              --data-urlencode "fields=files(id)")
+  
+            FILE_ID=$(echo "$SEARCH_RES" | jq -r '.files[0].id // empty')
+  
+            if [ -n "$FILE_ID" ]; then
+              echo "Found existing file (ID: $FILE_ID). Updating in-place..."
+            
+              HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -X PATCH -L "https://www.googleapis.com/upload/drive/v3/files/$FILE_ID?uploadType=multipart" \
+                -H "Authorization: Bearer $ACCESS_TOKEN" \
+                -F "metadata={\"name\":\"$FILE_NAME\"};type=application/json;charset=UTF-8" \
+                -F "file=@target/$FILE_NAME;type=application/pdf")
+            else
+              echo "No existing file found. Creating new file..."
+            
+              HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" -X POST -L "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart" \
+                -H "Authorization: Bearer $ACCESS_TOKEN" \
+                -F "metadata={\"name\":\"$FILE_NAME\", \"parents\":[\"$FOLDER_ID\"]};type=application/json;charset=UTF-8" \
+                -F "file=@$FILE_PATH;type=application/pdf")
+            fi
+  
+            if [ "$HTTP_STATUS" -ne 200 ]; then
+              echo "Upload failed with status $HTTP_STATUS"
+              cat response.json
+              exit 1
+            fi
+  
+            echo "$FILE_NAME uploaded successfully."
+          done
