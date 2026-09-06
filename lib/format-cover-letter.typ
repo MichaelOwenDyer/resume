@@ -1,6 +1,6 @@
 #import "style.typ": *
 
-#let cover-letter(data) = {
+#let format-cover-letter(data) = {
   set page(paper: "a4", margin: 10mm)
   set text(font: sans, size: body-size)
   set par(leading: .8em)

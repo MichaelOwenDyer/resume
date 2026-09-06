@@ -10,7 +10,7 @@
 #let sidebar-width = 32%
 #let column-gutter = 20pt
 
-#let resume(data) = {
+#let format-resume(data) = {
   set page(paper: "a4", margin: margin)
   set text(font: sans, size: body-size, tracking: body-tracking)
   show link: underline
