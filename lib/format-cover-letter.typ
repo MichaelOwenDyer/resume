@@ -16,20 +16,16 @@
   v(4pt)
   align(center, rule(width: 75%))
   v(10pt)
-
-  for line in data.recipient [
-    #line \
-  ]
+  data.recipient.join([ \ ])
   align(right, [#data.sender.place, #data.date])
   strong[#data.subject]
   v(10pt)
   data.salutation
   v(10pt)
-  for paragraph in data.body [
-    #paragraph
-    #v(10pt)
-  ]
+  data.body.join(v(10pt))
+  v(10pt)
+  place(image("/assets/signature.png", width: 50mm))
   data.closing
-  image("/assets/signature.png", width: 50mm)
+  v(52pt)
   data.sender.name
 }
