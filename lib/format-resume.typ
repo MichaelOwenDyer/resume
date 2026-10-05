@@ -27,21 +27,34 @@
     )[#upper(it)]
   ]
 
-  grid(
-    columns: (sidebar-width, 1fr),
-    column-gutter: column-gutter,
-    [#image("/assets/photo.png", width: 93%, height: 60mm)],
-    [
-      #rule()
-      #v(5pt)
-      #block(below: 20pt)[
-        #text(font: serif, size: 36pt, fill: accent-green)[#data.name]
-        #v(25pt, weak: true)
-        #text(font: serif, size: 17pt)[#data.tagline-full]
-      ]
-      #align(bottom, rule())
-    ],
-  )
+  if "photo" in data {
+    grid(
+      columns: (sidebar-width, 1fr),
+      column-gutter: column-gutter,
+      { data.photo },
+      {
+        rule()
+        v(5pt)
+        block[
+          #text(font: serif, size: 36pt, fill: accent-green)[#data.name]
+          #v(25pt, weak: true)
+          #text(font: serif, size: 17pt)[#data.tagline-full]
+        ]
+        align(bottom, rule())
+      },
+    )
+  } else {
+    rule()
+    v(5pt)
+    block[
+      #text(font: serif, size: 36pt, fill: accent-green)[#data.name]
+      #v(25pt, weak: true)
+      #text(font: serif, size: 17pt)[#data.tagline-full]
+    ]
+    v(10pt)
+    rule()
+  }
+
   v(10pt)
   grid(
     columns: (sidebar-width, 1fr),
@@ -55,7 +68,7 @@
         ..(
           ("envelope", link("mailto:" + data.contact.email)[#data.contact.email]),
           ("phone", data.contact.phone.join(" ")),
-          ("location-dot", [#data.contact.address.at(0) \ #data.contact.address.at(1)]),
+          ..if "address" in data.contact { ("location-dot", [#data.contact.address.at(0) \ #data.contact.address.at(1)]) },
           ("github", link(data.contact.github.url)[#data.contact.github.label]),
           ("linkedin", link(data.contact.linkedin.url)[#data.contact.linkedin.label]),
         ).map(it => (
@@ -102,19 +115,30 @@
   pagebreak()
 
   rule()
-  grid(
-    columns: (sidebar-width, 1fr),
-    column-gutter: column-gutter,
-    [
-      #align(bottom + left, rule())
-    ],
-    [
+  if "photo" in data {
+    grid(
+      columns: (sidebar-width, 1fr),
+      column-gutter: column-gutter,
+      { align(bottom + left, rule()) },
+      {
+        text(font: serif, size: 30pt, fill: accent-green)[#data.name]
+        v(15pt, weak: true)
+        text(font: serif, size: 17pt)[#data.tagline-short]
+        align(bottom, rule())
+      },
+    )
+  } else {
+    v(5pt)
+    block[
       #text(font: serif, size: 30pt, fill: accent-green)[#data.name]
       #v(15pt, weak: true)
       #text(font: serif, size: 17pt)[#data.tagline-short]
-      #align(bottom, rule())
-    ],
-  )
+    ]
+    v(5pt)
+    rule()
+  }
+
+  v(5pt)
   grid(
     columns: (sidebar-width, 1fr),
     column-gutter: column-gutter,

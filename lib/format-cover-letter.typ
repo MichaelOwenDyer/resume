@@ -10,7 +10,7 @@
     #v(20pt, weak: true)
     #text(weight: "light", tracking: 2pt)[
       #data.sender.phone.join("") \
-      #data.sender.street, #data.sender.zip #data.sender.place
+      #("street", "zip", "place").filter(it => it in data.sender).map(it => data.sender.at(it)).join(", ")
     ]
   ]
   v(4pt)
@@ -24,7 +24,7 @@
   v(10pt)
   data.body.join(v(10pt))
   v(10pt)
-  place(image("/assets/signature.png", width: 50mm))
+  if "signature" in data { place(data.signature) }
   data.closing
   v(52pt)
   data.sender.name

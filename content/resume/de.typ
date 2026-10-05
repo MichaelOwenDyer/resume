@@ -14,6 +14,8 @@
     interests: "KÜNSTLERISCHE TÄTIGKEIT",
   ),
 
+  photo: image("../../assets/photo.png", width: 93%, height: 60mm),
+
   name: "Michael Dyer",
   tagline-full: [System-Softwareingenieur mit Fokus auf Korrektheit, rigorose Typsysteme und High-Performance Computing in missionskritischen Umgebungen.\ Erfahrener technischer Kommunikator und Dozent.],
   tagline-short: "Systems & Performance Software Engineer",

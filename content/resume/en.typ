@@ -14,6 +14,8 @@
     interests: "ARTISTIC PERFORMANCE",
   ),
 
+  photo: image("../../assets/photo.png", width: 93%, height: 60mm),
+
   name: "Michael Dyer",
   tagline-full: [Systems software engineer driven by correctness, rigorous type systems, and high-performance computing in mission-critical environments.\ Skilled technical communicator and educator.],
   tagline-short: "Systems & Performance Software Engineer",
@@ -33,7 +35,7 @@
     ),
     (
       title: "Technologies and Frameworks",
-      items: ("Linux (NixOS)", "MacOS", "Git", "Docker", "Kubernetes", "Jenkins", "Grafana", "Prometheus", "ActiveMQ", "LLMs"),
+      items: ("Linux (NixOS)", "MacOS", "Git", "Docker", "Kubernetes", "Jenkins", "Prometheus", "Z3"),
     ),
   ),
 
